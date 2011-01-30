@@ -27,6 +27,22 @@ Window::Window(int width, int height, int bpp) {
   App.Create(videoMode, windowTitle.c_str());
 }
 
+Window::~Window() {
+  App.Close();
+}
+
 void Window::Init() {
   Window::DefaultVideoMode  = sf::VideoMode(800, 800, 32);
+}
+
+void Window::Render() {
+  App.Display();
+}
+
+void Window::Clear() {
+  App.Clear();
+}
+
+void Window::Draw(sf::Drawable& obj) {
+  App.Draw(obj);
 }

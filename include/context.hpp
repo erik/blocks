@@ -4,6 +4,7 @@
 #include "blocks.hpp"
 #include "input.hpp"
 #include "window.hpp"
+#include "gui.hpp"
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
@@ -16,6 +17,7 @@ struct Context {
   GameState gameState;
   InputHandler *input;
   float frameRate;
+  GUIPage gui;
 
   Context() : gameState(State_InMenu) {}
   Context(Window* w) : window(w), gameState(State_InMenu),

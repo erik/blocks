@@ -19,8 +19,13 @@ struct Window {
   Window(int width, int height, 
          int bpp = 32);
 
+  ~Window();
+
   void setFullscreen(bool val);
   void setTitle(std::string title);
+  void Render();
+  void Clear();
+  void Draw(sf::Drawable& obj);
 
 } ;
 
