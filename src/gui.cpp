@@ -4,8 +4,9 @@
 
 // GUIPage //
 
-GUIPage::GUIPage(Window* w) {
+GUIPage::GUIPage(Window* w, Context* c) {
   window = w;
+  context = c;
   focusedElement = NULL;
 }
 
@@ -23,7 +24,7 @@ void GUIPage::HandleInput(const sf::Input& input) {
   // TODO: This loop is also repeated in GUIPage::Click().
   // bring it out into a separate method.
   for(unsigned int i = 0; i < elements.size(); ++i) {
-    if(pointIntersectsShape(x, y, elements[i]->shape)) {
+    if(elements[i]->shape.Contains(x, y)) {
       elements[i]->focused = true;
 
       focusedElement = elements[i];
@@ -53,8 +54,9 @@ void GUIPage::Render() {
 
 void GUIPage::Click(int x, int y) {
   for(unsigned int i = 0; i < elements.size(); ++i) {
-    if(pointIntersectsShape(x, y, elements[i]->shape)) {
+    if(elements[i]->shape.Contains(x, y)) {
       std::cout << "Click hit element: " << i << std::endl;
+      break;
     }
   }
 }
@@ -71,15 +73,26 @@ void GUIElement::Render() {
   } else {
     col = colUnfocused;
   }
-  
-  shape.SetColor(col);
     
-  page.window->Draw(shape);
+  sf::Shape drawRect = sf::Shape::Rectangle(shape.Left, shape.Top, shape.Right, shape.Bottom, col);
+    
+  page.window->Draw(drawRect);
 }
 
 // stub
 void GUIElement::OnClick(int x, int y) {
+  // if a callback exists, call that instead
+  if(onClick != NULL) {
+    return onClick(this, x, y);
+  }
   std::cout << "You clicked me!";
+}
+
+void GUIElement::OnKey(char x) {
+  if(onKey != NULL) {
+    return onKey(this, x);
+  }
+  std::cout << "You hit me with: " << x ;
 }
 
 void GUIElement::SetFocus(bool val) {
@@ -93,12 +106,6 @@ void GUIElement::SetFocus(bool val) {
   focused = val;
 }
 
-
-void GUIElement::SetDimensions(int x, int y) {
-  dimensions.x = x;
-  dimensions.y = y;
-}
-
 // GUIButton //
 void GUIButton::Render() {
   GUIElement::Render();
@@ -109,14 +116,19 @@ void GUIButton::Render() {
   str.SetSize(30);
 
   // unmaintainable mess
-  str.SetPosition(shape.GetPointPosition(0).x + dimensions.x / 2 - 
-                  str.GetRect().GetWidth() / 2, shape.GetPointPosition(0).y
-                  + dimensions.y / 2 - str.GetSize() / 2);
+  str.SetPosition(shape.Left + shape.GetWidth() / 2 - 
+                  str.GetRect().GetWidth() / 2, shape.Top
+                  + shape.GetHeight() / 2 - str.GetSize() / 2);
 
   page.window->Draw(str);
 }
 
 void GUIButton::OnClick(int x, int y) {
   GUIElement::OnClick(x, y);
+  std::cout << " (Button: \"" << label << "\")" << std::endl;
+}
+
+void GUIButton::OnKey(char key) {
+  GUIButton::OnKey(key);
   std::cout << " (Button: \"" << label << "\")" << std::endl;
 }

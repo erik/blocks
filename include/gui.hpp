@@ -2,16 +2,21 @@
 #define _GUI_H_
 
 #include "window.hpp"
+#include "context.hpp"
 
 class GUIElement;
+struct Context;
+
+// GUIPage //
 
 struct GUIPage {
   Window *window;
+  Context *context;
   std::vector<GUIElement*> elements;
   GUIElement* focusedElement;
 
   GUIPage() {}
-  GUIPage(Window* w);
+  GUIPage(Window* w, Context* c=NULL);
 
   void AddElement(GUIElement* e);
 
@@ -27,37 +32,52 @@ struct GUIPage {
   std::string InputDialog(std::string title, std::string prompt);
 };
 
+// GUIElement //
+
+typedef void (*OnClickCallback)(GUIElement* const, int, int);
+typedef void (*OnKeyCallback)(GUIElement* const, char key);
+
 struct GUIElement {
   GUIPage page;
-  sf::Shape shape;
+  sf::Rect<int>::Rect shape;
   bool focused;
-  sf::Vector2<int> dimensions;
-
   sf::Color colFocused, colUnfocused;
 
+  OnClickCallback onClick;
+  OnKeyCallback onKey;
+
 public:
+  GUIElement() {
+    onClick = NULL;
+    onKey = NULL;
+  }
+
+  virtual void SetOnClick(OnClickCallback callback) {
+    onClick = callback;
+  }
+  virtual void SetOnKey(OnKeyCallback callback) {
+    onKey = callback;
+  }
+
   virtual void OnClick(int x, int y);
-  void OnKey(char key);
+  virtual void OnKey(char key);
+
+  virtual void SetFocus(bool val);
 
   virtual void Render();
-
-  void SetActive(bool val);
-  void SetFocus(bool val);
-
-  virtual void SetDimensions(int w, int h);
-
 };
+
+// GUIButton //
 
 class GUIButton : public GUIElement {
   std::string label;
   sf::Color textColor;
 
 public:
-  GUIButton(std::string label, sf::Shape s, int w, int h, sf::Color foc, sf::Color unFoc) : 
+  GUIButton(std::string label, sf::Rect<int>::Rect s, sf::Color foc, sf::Color unFoc) : 
     label(label), textColor(sf::Color::Black) {
 
-    dimensions.x = w;
-    dimensions.y = h;
+    GUIElement::GUIElement();
 
     shape = s;
 
@@ -70,6 +90,7 @@ public:
   // overridden funcs
   void Render();
   void OnClick(int x, int y);
+  void OnKey(char key);
 };
 
 class GUITextField : GUIElement {

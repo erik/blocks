@@ -14,12 +14,14 @@
 struct InputHandler;
 enum GameState;
 
+struct GUIPage;
+
 struct Context {
   Window *window;
   GameState gameState;
   InputHandler *input;
   float frameRate;
-  GUIPage gui;
+  GUIPage *gui;
 
   Context() : gameState(State_InMenu) {}
   Context(Window* w) : window(w), gameState(State_InMenu),

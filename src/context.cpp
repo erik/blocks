@@ -6,7 +6,7 @@ void Context::HandleInput() {
 
   switch(gameState) {
   case State_InMenu:
-    gui.HandleInput(Input); 
+    gui->HandleInput(Input); 
     break;
   default:
     std::cerr << "Unrecognized game state" << std::endl;
@@ -18,7 +18,6 @@ void Context::HandleInput() {
 
       if (Event.Type == sf::Event::Closed || ((Event.Type == sf::Event::KeyPressed) && 
                                               (Event.Key.Code == sf::Key::Escape))) {
-
         gameState = State_Closed;
         break;
 
@@ -27,7 +26,7 @@ void Context::HandleInput() {
         switch(gameState) {
 
         case State_InMenu:
-          gui.HandleEvent(Event);
+          gui->HandleEvent(Event);
           break;
 
         default:
@@ -43,7 +42,7 @@ void Context::Render() {
 
   // TODO: make this work on stuff other than the GUI
   
-  gui.Render();
+  gui->Render();
   window->Render();
 }
 
