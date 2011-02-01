@@ -7,6 +7,7 @@ Window::Window(std::string title) {
   windowTitle = title;
   videoMode = Window::DefaultVideoMode;
 
+  App.SetFramerateLimit(60);
   App.Create(videoMode, windowTitle.c_str());
 }
 
