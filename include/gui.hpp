@@ -15,6 +15,9 @@ struct GUIPage {
 
   void AddElement(GUIElement* e);
 
+  void HandleInput(const sf::Input& input);
+  void HandleEvent(sf::Event event);
+
   void Click(int x, int y);
   void Key(char key);
 
@@ -33,7 +36,7 @@ struct GUIElement {
   sf::Color colFocused, colUnfocused;
 
 public:
-  void OnClick(int x, int y);
+  virtual void OnClick(int x, int y);
   void OnKey(char key);
 
   virtual void Render();
@@ -50,16 +53,23 @@ class GUIButton : public GUIElement {
   sf::Color textColor;
 
 public:
-  GUIButton(std::string label) : label(label), textColor(sf::Color::Black) {
-    dimensions.x = 0;
-    dimensions.y = 0;
+  GUIButton(std::string label, sf::Shape s, int w, int h, sf::Color foc, sf::Color unFoc) : 
+    label(label), textColor(sf::Color::Black) {
+
+    dimensions.x = w;
+    dimensions.y = h;
+
+    shape = s;
+
+    colFocused = foc;
+    colUnfocused = unFoc;
   }
                                  
   void SetText(std::string label);
 
   // overridden funcs
   void Render();
-
+  void OnClick(int x, int y);
 };
 
 class GUITextField : GUIElement {

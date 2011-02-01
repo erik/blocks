@@ -9,6 +9,8 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
+#include <iostream>
+
 struct InputHandler;
 enum GameState;
 
@@ -22,6 +24,9 @@ struct Context {
   Context() : gameState(State_InMenu) {}
   Context(Window* w) : window(w), gameState(State_InMenu),
                                  frameRate(0.0f) {}
+
+  void HandleInput();
+  void Render();
 
   // Initialize everything needed for the game
   static void Init();

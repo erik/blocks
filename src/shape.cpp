@@ -1,7 +1,7 @@
 #include <cmath>
 #include "SFML/Graphics.hpp"
 
-double angle2D(double x1, double y1, double x2, double y2)
+/*double angle2D(double x1, double y1, double x2, double y2)
 {
    double dtheta,theta1,theta2;
 
@@ -27,9 +27,9 @@ bool pointIntersectsShape(int x, int y, sf::Shape shape) {
     
     int x1, x2, y1, y2;
 
-    x1 = vec.x - x;
+    x1 = vec.x  - x;
     x2 = vec2.x - x;
-    y1 = vec.y - y;
+    y1 = vec.y  - y;
     y2 = vec2.y - y;
 
     angle += angle2D(x, y, x2, y2);
@@ -39,4 +39,18 @@ bool pointIntersectsShape(int x, int y, sf::Shape shape) {
     return true;
   } 
   return false;
+}*/
+
+
+bool pointIntersectsShape(int x, int y, sf::Shape shape) {
+  // TODO: Hardcoding this is pretty much the dumbest 
+  // thing in the history of forever.
+
+  sf::Vector2<float> ltop = shape.GetPointPosition(0);
+  sf::Vector2<float> rbot = shape.GetPointPosition(2);
+
+  sf::Rect<float>::Rect hitbox(ltop.x, ltop.y, rbot.x, rbot.y);
+
+  return hitbox.Contains(x, y);
+
 }
