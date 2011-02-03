@@ -1,8 +1,11 @@
 CC	:= g++
-IFLAGS 	:= -I include/
+IFLAGS 	:= -I include/ -IBox2D/Box2D
 CFLAGS	:= -Wall -Wextra -Wno-unused-parameter
 DFLAGS	:= -g -DDEBUG
-LNFLAGS	:= -lsfml-graphics -lsfml-window -lsfml-network -lsfml-system -lm
+# $(shell find Box2D/Build/Box2D -name "*.o" -type f)
+
+BOX2D   := -lBox2D Box2D/Build/Box2D/libBox2D.a
+LNFLAGS	:= -lsfml-graphics -lsfml-window -lsfml-network -lsfml-system -lm $(BOX2D)
 EXE 	:= blocks
 
 .SUFFIXES=.cpp

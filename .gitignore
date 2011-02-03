@@ -1,3 +1,4 @@
 *.o
 *~
 blocks
+Box2D/*
