@@ -1,4 +1,5 @@
 #include "game.hpp"
+#include "world.hpp"
 
 Game* Game::instance = NULL;  
   
@@ -24,10 +25,39 @@ Game* Game::Create() {
   return g;
 }
 
-void Game::Loop() {  
+void Game::Loop() {
+  World w;
+  WorldShape floor = w.CreateBox(250, 700, 200, 10, true);
+
+  std::vector<WorldShape> shapes;
+
   while(context->gameState == State_InMenu) {
+    int x = sf::Randomizer::Random(0, 800);
+    int w_ = sf::Randomizer::Random(1, 50);
+    int h = sf::Randomizer::Random(1, 50);
+
+    if(sf::Randomizer::Random(1, 20) == 5)
+      shapes.push_back(w.CreateBox(x, 0, w_, h, false));
+
+    w.Step();
+    
     context->HandleInput();
-    context->Render();
+    // context->Render();
+
+    context->window->Clear();
+
+    sf::Shape s;
+    
+    for(unsigned int i = 0; i < shapes.size(); ++i) {
+      s = shapes[i].CreateRectangle();
+      context->window->Draw(s);
+    }
+
+    s = floor.CreateRectangle(sf::Color::Green);
+    context->window->Draw(s);
+
+    context->window->Render();
+
   }
 }
 

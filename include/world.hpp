@@ -14,6 +14,8 @@ namespace WorldConfig {
   const float scale = 30.0f; // 30 pixels per meter
   const float width = 800.0f;
   const float height = 800.0f;
+  const int velocityIterations = 8;
+  const int positionIterations = 8;
 }
 
 class WorldShape;
@@ -31,16 +33,18 @@ public:
     return world;
   }
 
+  void Step();
+
+  b2Body* CreateBody(b2BodyDef bodydef);
   void AddShape(WorldShape s);
 
   // these two return WorldShapes, automatically attaching them to the world
-  WorldShape CreateBox(int x, int y, int width, int height,
-                       bool isStatic=false);
+  WorldShape CreateBox(int x, int y, int width, int height, bool isStatic=false);
   WorldShape CreateCircle(int x, int y, int radius);
 };
 
 class WorldShape {
-  float x, y;
+  float x, y, w, h;
   bool isStatic;
 
   b2Body* body;
@@ -48,10 +52,19 @@ class WorldShape {
   b2FixtureDef fixtureDef;
   
 public:
+  
+  sf::Vector2<float> GetPosition();
+  // returns degrees!
+  float GetRotation();
+
+  void SetRotation(float degrees);
+
+  sf::Shape CreateRectangle(sf::Color color=sf::Color::White);
+
   // This doesn't scale anything! That needs to be done manually, or by using
   // World::Create[Box, Circle]
   static WorldShape AsBox(b2Body* bod, float w, float h, bool isStatic);
-  //  static WorldShape AsCircle(World* world, float x, float y, float r, bool isStatic);
+  static WorldShape AsCircle(World* world, float x, float y, float r, bool isStatic);
 };
 
 #endif /* _WORLD_H_ */
