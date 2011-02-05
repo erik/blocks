@@ -45,7 +45,6 @@ WorldShape WorldShape::AsBox(b2Body* bod, float w, float h, bool isStatic) {
 
   b2PolygonShape dynamicBox;
 
-  // TODO: / 2 ? 
   dynamicBox.SetAsBox(w / 2, h / 2);
   
   b2FixtureDef fixtureDef;  
@@ -69,9 +68,11 @@ float WorldShape::GetRotation() {
 
 sf::Vector2<float> WorldShape::GetPosition() {
   b2Vec2 position = body->GetPosition();
+
   sf::Vector2<float> pos;
-  pos.x = position.x * WorldConfig::scale - (w * WorldConfig::scale / 2);
-  pos.y = position.y * WorldConfig::scale - (h * WorldConfig::scale / 2);
+  pos.x = position.x * WorldConfig::scale; 
+  pos.y = position.y * WorldConfig::scale;
+
   return pos;
 }
 
@@ -83,7 +84,8 @@ void WorldShape::SetRotation(float degrees) {
 // creates a proper rectangle which can be drawn to the screen
 sf::Shape WorldShape::CreateRectangle(sf::Color color) {
   sf::Shape s = sf::Shape::Rectangle(0, 0, w * WorldConfig::scale, h * WorldConfig::scale, color);
-  s.SetPosition(GetPosition());
+  s.SetCenter(w * WorldConfig::scale / 2, h * WorldConfig::scale / 2);
   s.SetRotation(GetRotation());
+  s.SetPosition(GetPosition());
   return s;
 }

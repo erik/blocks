@@ -14,8 +14,8 @@ namespace WorldConfig {
   const float scale = 30.0f; // 30 pixels per meter
   const float width = 800.0f;
   const float height = 800.0f;
-  const int velocityIterations = 8;
-  const int positionIterations = 8;
+  const int velocityIterations = 20;
+  const int positionIterations = 20;
 }
 
 class WorldShape;

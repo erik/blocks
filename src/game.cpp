@@ -49,7 +49,10 @@ void Game::Loop() {
     sf::Shape s;
     
     for(unsigned int i = 0; i < shapes.size(); ++i) {
-      s = shapes[i].CreateRectangle();
+      int r = sf::Randomizer::Random(0, 256);
+      int g = sf::Randomizer::Random(0, 256);
+      int b = sf::Randomizer::Random(0, 256);
+      s = shapes[i].CreateRectangle(sf::Color(r,g,b,255));
       context->window->Draw(s);
     }
 
