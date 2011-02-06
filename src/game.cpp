@@ -17,50 +17,19 @@ Game* Game::Create() {
   g->win     = new Window();
   g->context = new Context(g->win);
   g->gui     = new GUIPage(g->win, g->context);
+  g->context->scene   = new MenuScene();
   
   g->context->gui = g->gui;
   
-  g->CreateMenuGUI();
+  g->CreateMenu();
 
   return g;
 }
 
 void Game::Loop() {
-  World w;
-  WorldShape floor = w.CreateBox(250, 700, 200, 10, true);
-
-  std::vector<WorldShape> shapes;
-
-  while(context->gameState == State_InMenu) {
-    int x = sf::Randomizer::Random(0, 800);
-    int w_ = sf::Randomizer::Random(1, 50);
-    int h = sf::Randomizer::Random(1, 50);
-
-    if(sf::Randomizer::Random(1, 20) == 5)
-      shapes.push_back(w.CreateBox(x, 0, w_, h, false));
-
-    w.Step();
-    
+  while(context->gameState == State_InMenu) {   
     context->HandleInput();
-    // context->Render();
-
-    context->window->Clear();
-
-    sf::Shape s;
-    
-    for(unsigned int i = 0; i < shapes.size(); ++i) {
-      int r = sf::Randomizer::Random(0, 256);
-      int g = sf::Randomizer::Random(0, 256);
-      int b = sf::Randomizer::Random(0, 256);
-      s = shapes[i].CreateRectangle(sf::Color(r,g,b,255));
-      context->window->Draw(s);
-    }
-
-    s = floor.CreateRectangle(sf::Color::Green);
-    context->window->Draw(s);
-
-    context->window->Render();
-
+    context->Render();
   }
 }
 
@@ -70,21 +39,32 @@ static void exitOnClick(GUIElement* const e, int x, int y) {
 }
 
 
-void Game::CreateMenuGUI() {
 
-  sf::Color lightgreen(0, 255, 0, 200);
-  sf::Color green(0, 255, 0, 128);
+void Game::CreateMenu() {
+
+  // Create the scene
+
+  context->scene->Init(context, context->world);
   
-  sf::Rect<int>::Rect rect(100, 100, 400, 200);
-  sf::Rect<int>::Rect rect2(100, 250, 400, 350);
-  sf::Rect<int>::Rect rect3(100, 400, 400, 500);
+  // Create the GUI
+
+  sf::Color invis(0, 0, 0, 0);
+  sf::Color gray(0x44, 0x44, 0x44, 128);
   
-  GUIButton *but =  new GUIButton("THIS BE TEXT", rect, green, lightgreen);
-  GUIButton *but2 = new GUIButton("OTHER TEXT",  rect2, green, lightgreen);
-  GUIButton *but3 = new GUIButton("EXIT",        rect3, green, lightgreen);
+  sf::Rect<int>::Rect rect(200, 200, 600, 250);
+  sf::Rect<int>::Rect rect2(200, 275, 600, 325);
+  sf::Rect<int>::Rect rect3(200, 350, 600, 400); 
+
+  GUIButton *but =  new GUIButton("START GAME", rect, gray, invis);
+  GUIButton *but2 = new GUIButton("OPTIONS",    rect2, gray, invis);
+  GUIButton *but3 = new GUIButton("EXIT",       rect3, gray, invis);
+
   but3->SetOnClick(exitOnClick);
+  but->SetFontSize(20.0f);
+  but2->SetFontSize(20.0f);
+  but3->SetFontSize(20.0f);
 
   gui->AddElement(but);
   gui->AddElement(but2);
-  gui->AddElement(but3);  
+  gui->AddElement(but3);
 }

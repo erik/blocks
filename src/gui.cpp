@@ -64,6 +64,15 @@ void GUIPage::Click(int x, int y) {
 
 // GUIElement //
 
+
+void GUIElement::SetFont(sf::Font f) {
+  font = f;
+}
+
+void GUIElement::SetFontSize(float s) {
+  fontSize = s;
+}
+
 // stub
 void GUIElement::Render() {
   sf::Color col;
@@ -112,8 +121,7 @@ void GUIButton::Render() {
 
   // TODO: String color
 
-  sf::String str = sf::String(label.c_str());
-  str.SetSize(30);
+  sf::String str = sf::String(label.c_str(), font, fontSize);
 
   // unmaintainable mess
   str.SetPosition(shape.Left + shape.GetWidth() / 2 - 
@@ -132,3 +140,4 @@ void GUIButton::OnKey(char key) {
   GUIButton::OnKey(key);
   std::cout << " (Button: \"" << label << "\")" << std::endl;
 }
+ 

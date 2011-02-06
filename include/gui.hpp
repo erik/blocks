@@ -42,6 +42,8 @@ struct GUIElement {
   sf::Rect<int>::Rect shape;
   bool focused;
   sf::Color colFocused, colUnfocused;
+  sf::Font font;
+  float fontSize;
 
   OnClickCallback onClick;
   OnKeyCallback onKey;
@@ -50,7 +52,12 @@ public:
   GUIElement() {
     onClick = NULL;
     onKey = NULL;
+    font = sf::Font::GetDefaultFont();
+    fontSize = 30;
   }
+
+  void SetFont(sf::Font font);
+  void SetFontSize(float size);
 
   virtual void SetOnClick(OnClickCallback callback) {
     onClick = callback;

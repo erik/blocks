@@ -1,6 +1,7 @@
 #ifndef _WORLD_H_
 #define _WORLD_H_
 
+#include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 #include <vector>
 
@@ -14,8 +15,8 @@ namespace WorldConfig {
   const float scale = 30.0f; // 30 pixels per meter
   const float width = 800.0f;
   const float height = 800.0f;
-  const int velocityIterations = 20;
-  const int positionIterations = 20;
+  const int velocityIterations = 8;
+  const int positionIterations = 8;
 }
 
 class WorldShape;
@@ -25,13 +26,9 @@ class World {
   std::vector<WorldShape> shapes;
 
 public:
-  World() {  
-    world = new b2World(WorldConfig::gravity, WorldConfig::doSleep);
-  }
+  World();
 
-  b2World* GetWorld() {
-    return world;
-  }
+  b2World* GetWorld();
 
   void Step();
 
@@ -46,20 +43,25 @@ public:
 class WorldShape {
   float x, y, w, h;
   bool isStatic;
+  sf::Color color;
 
   b2Body* body;
   b2PolygonShape polygonShape;
   b2FixtureDef fixtureDef;
-  
+
 public:
-  
+  WorldShape() {}
+  WorldShape(float w, float h, sf::Color=sf::Color::White);
+
+  void Destroy(World world);
+
   sf::Vector2<float> GetPosition();
-  // returns degrees!
   float GetRotation();
 
   void SetRotation(float degrees);
+  void SetColor(sf::Color color);
 
-  sf::Shape CreateRectangle(sf::Color color=sf::Color::White);
+  sf::Shape CreateRectangle();
 
   // This doesn't scale anything! That needs to be done manually, or by using
   // World::Create[Box, Circle]

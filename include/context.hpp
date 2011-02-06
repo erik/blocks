@@ -5,6 +5,8 @@
 #include "input.hpp"
 #include "window.hpp"
 #include "gui.hpp"
+#include "world.hpp"
+#include "scene.hpp"
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
@@ -13,8 +15,8 @@
 
 struct InputHandler;
 enum GameState;
-
 struct GUIPage;
+class Scene;
 
 struct Context {
   Window *window;
@@ -22,6 +24,8 @@ struct Context {
   InputHandler *input;
   float frameRate;
   GUIPage *gui;
+  World world;
+  Scene* scene;
 
   Context() : gameState(State_InMenu) {}
   Context(Window* w) : window(w), gameState(State_InMenu),
@@ -32,6 +36,9 @@ struct Context {
 
   // Initialize everything needed for the game
   static void Init();
+
+private:
+  void RenderState();
 
 } ;
 

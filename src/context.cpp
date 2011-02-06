@@ -1,5 +1,6 @@
 #include "context.hpp"
 #include "window.hpp"
+#include "scene.hpp"
 
 void Context::HandleInput() {
   const sf::Input& Input = window->App.GetInput();
@@ -40,12 +41,25 @@ void Context::HandleInput() {
 void Context::Render() {
   window->Clear();
 
-  // TODO: make this work on stuff other than the GUI
-  
-  gui->Render();
+  RenderState();
+
   window->Render();
 }
 
 void Context::Init() {
   Window::Init();
+}
+
+void Context::RenderState() {
+  switch(gameState) {
+  case State_InMenu:
+    scene->Step();
+    scene->Render();
+    gui->Render();
+    break;
+  case State_Closed:
+    break;
+  default:
+    std::cerr << "Todo: implement me. Context::RenderState()" << std::endl;
+  }
 }

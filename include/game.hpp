@@ -22,7 +22,7 @@ private:
   Game() {}
   Game(Game const&){};
 
-  void CreateMenuGUI();
+  void CreateMenu();
 
   static Game* Create();
 
