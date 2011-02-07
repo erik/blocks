@@ -5,13 +5,7 @@
 void Context::HandleInput() {
   const sf::Input& Input = window->App.GetInput();
 
-  switch(gameState) {
-  case State_InMenu:
-    gui->HandleInput(Input); 
-    break;
-  default:
-    std::cerr << "Unrecognized game state" << std::endl;
-  }
+  scene->HandleInput(Input); 
 
   sf::Event Event;
   while (window->App.GetEvent(Event))
@@ -23,17 +17,7 @@ void Context::HandleInput() {
         break;
 
       } else {
-
-        switch(gameState) {
-
-        case State_InMenu:
-          gui->HandleEvent(Event);
-          break;
-
-        default:
-          //this needs to be implementered
-          std::cerr << "Unrecognized game state" << std::endl;
-        }
+        scene->HandleEvent(Event);
       }
     }
 }
@@ -54,6 +38,12 @@ void Context::RenderState() {
   switch(gameState) {
   case State_InMenu:
     scene->Step();
+    scene->Render();
+    gui->Render();
+    break;
+  case State_InGame:
+    scene->Step();
+  case State_Paused:
     scene->Render();
     gui->Render();
     break;

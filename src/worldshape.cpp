@@ -40,7 +40,7 @@ sf::Vector2<float> WorldShape::GetPosition() {
 
   sf::Vector2<float> pos;
   pos.x = position.x * WorldConfig::scale; 
-  pos.y = position.y * WorldConfig::scale;
+  pos.y = position.y * WorldConfig::scale; 
 
   return pos;
 }

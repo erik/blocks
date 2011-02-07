@@ -12,9 +12,14 @@ protected:
   Context* context;
 
 public:
-  virtual void Init(Context *c, World world)=0;
+  Scene() {};
+
+  virtual void Init(Context *c)=0;
   virtual void Step()=0;
   virtual void Render()=0;
+
+  virtual void HandleInput(const sf::Input& in)=0;
+  virtual void HandleEvent(sf::Event e)=0;
 };
 
 class MenuScene : public Scene {
@@ -22,9 +27,32 @@ class MenuScene : public Scene {
   std::vector<WorldShape> blocks;
   
 public:
-  void Init(Context* c, World world);
+  void Init(Context* c);
   void Step();
   void Render();
+
+  void HandleInput(const sf::Input& in);
+  void HandleEvent(sf::Event e);
+};
+
+class GameScene : public Scene {
+  WorldShape platform;
+  std::vector<WorldShape> blocks;
+
+  float x, w, h, rot;
+  bool holdingShape;
+
+public:
+  void Init(Context *c);
+  void Step();
+  void Render();
+
+  void HandleInput(const sf::Input& in);
+  void HandleEvent(sf::Event e);
+
+private:
+  void GenerateShape();
+  void DropShape();
 };
 
 

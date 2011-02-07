@@ -8,6 +8,8 @@
 
 // Singleton class
 
+class GUIPage;
+
 struct Game {
   Context* context;
   Window* win;
@@ -17,6 +19,8 @@ struct Game {
   void Close();
 
   static Game* Instance();
+
+  void CreateGame();
 
 private:
   Game() {}

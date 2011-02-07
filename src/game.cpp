@@ -18,7 +18,8 @@ Game* Game::Create() {
   g->context = new Context(g->win);
   g->gui     = new GUIPage(g->win, g->context);
   g->context->scene   = new MenuScene();
-  
+  g->context->game    = g;
+
   g->context->gui = g->gui;
   
   g->CreateMenu();
@@ -27,7 +28,7 @@ Game* Game::Create() {
 }
 
 void Game::Loop() {
-  while(context->gameState == State_InMenu) {   
+  while(context->gameState != State_Closed) {   
     context->HandleInput();
     context->Render();
   }
@@ -38,13 +39,22 @@ static void exitOnClick(GUIElement* const e, int x, int y) {
   e->page.context->gameState = State_Closed;
 }
 
+static void startGameOnClick(GUIElement* const e, int x, int y) {
+  Game *g = e->page.context->game;
+
+  g->context->gameState = State_InGame;
+  g->context->gui = new GUIPage(g->win, g->context);
+  g->context->scene= new GameScene();
+
+  g->CreateGame();
+}
 
 
 void Game::CreateMenu() {
 
   // Create the scene
 
-  context->scene->Init(context, context->world);
+  context->scene->Init(context);
   
   // Create the GUI
 
@@ -60,6 +70,8 @@ void Game::CreateMenu() {
   GUIButton *but3 = new GUIButton("EXIT",       rect3, gray, invis);
 
   but3->SetOnClick(exitOnClick);
+  but->SetOnClick(startGameOnClick);
+
   but->SetFontSize(20.0f);
   but2->SetFontSize(20.0f);
   but3->SetFontSize(20.0f);
@@ -67,4 +79,21 @@ void Game::CreateMenu() {
   gui->AddElement(but);
   gui->AddElement(but2);
   gui->AddElement(but3);
+}
+
+void Game::CreateGame() {
+  // Create the scene
+  
+  context->scene->Init(context);
+  
+  // Create the GUI
+  
+  sf::Color gray(0x44, 0x44, 0x44, 128);
+
+  sf::Rect<int>::Rect scoreRect(100, 100, 200, 150);
+
+  GUIButton *scoreBut = new GUIButton("SCORE: ", scoreRect, gray, gray);
+
+  gui->AddElement(scoreBut);
+
 }

@@ -2,12 +2,15 @@
 
 sf::VideoMode Window::DefaultVideoMode;
 
+// TODO: bunches of repeated code in here.
+
 Window::Window(std::string title) {
   fullscreen =false;
   windowTitle = title;
   videoMode = Window::DefaultVideoMode;
 
   App.SetFramerateLimit(60);
+  App.UseVerticalSync(true);
   App.Create(videoMode, windowTitle.c_str());
 }
 
@@ -16,13 +19,17 @@ Window::Window(sf::VideoMode mode) {
   windowTitle = "Blocks";
   videoMode = mode;
 
+  App.SetFramerateLimit(60);
+  App.UseVerticalSync(true);
   App.Create(videoMode, windowTitle.c_str());
 }
 
 Window::Window(int width, int height, int bpp) {
   fullscreen = false;
   windowTitle = "Blocks";
-  
+
+  App.SetFramerateLimit(60);
+  App.UseVerticalSync(true);
   videoMode = sf::VideoMode(width, height, bpp);
   
   App.Create(videoMode, windowTitle.c_str());
@@ -30,7 +37,7 @@ Window::Window(int width, int height, int bpp) {
 
 Window::~Window() {
   App.Close();
-}
+} 
 
 void Window::Init() {
   Window::DefaultVideoMode  = sf::VideoMode(800, 800, 32);
