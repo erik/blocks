@@ -57,6 +57,8 @@ public:
 
   sf::Vector2<float> GetPosition();
   float GetRotation();
+  float GetWidth();
+  float GetHeight();
 
   void SetRotation(float degrees);
   void SetColor(sf::Color color);

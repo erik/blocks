@@ -45,6 +45,14 @@ sf::Vector2<float> WorldShape::GetPosition() {
   return pos;
 }
 
+float WorldShape::GetWidth() {
+  return w;
+}
+
+float WorldShape::GetHeight() {
+  return h;
+}
+
 void WorldShape::SetRotation(float degrees) {
   float radians = degrees * (M_PI / 180);
   body->SetTransform(body->GetPosition(), -radians);

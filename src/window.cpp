@@ -1,3 +1,4 @@
+#include <SFML/Window.hpp>
 #include "window.hpp"
 
 sf::VideoMode Window::DefaultVideoMode;
@@ -12,6 +13,8 @@ Window::Window(std::string title) {
   App.SetFramerateLimit(60);
   App.UseVerticalSync(true);
   App.Create(videoMode, windowTitle.c_str());
+  //fullscreen
+  //App.Create(sf::VideoMode::GetMode(0), "SFML Window", sf::Style::Fullscreen);
 }
 
 Window::Window(sf::VideoMode mode) {
