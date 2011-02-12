@@ -52,6 +52,9 @@ class GameScene : public Scene {
   int droppedBlocks;
   float score;
 
+  sf::Clock clock;
+  float startTime;
+
 public:
   void Init(Context *c);
   void Step();

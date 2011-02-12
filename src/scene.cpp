@@ -51,8 +51,6 @@ void MenuScene::Render() {
     context->window->Draw(s);
   }
 
-  /*  s = floor.CreateRectangle();
-  context->window->Draw(s); */
 }
 
 void MenuScene::HandleInput(const sf::Input& in) {
@@ -82,10 +80,10 @@ void GameScene::Init(Context* c) {
   {
     sf::Color gray(0x22, 0x22, 0x22, 128);
     
-    sf::Rect<int>::Rect scoreButRect(50, 50, 150, 100);
-    sf::Rect<int>::Rect timeButRect(800 - 150, 50, 800 - 50, 100);
+    sf::Rect<int>::Rect scoreButRect(50, 50, 170, 100);
+    sf::Rect<int>::Rect timeButRect(800 - 170, 50, 800 - 50, 100);
     
-    scoreBut = new GUIButton("0", scoreButRect, gray, gray);
+    scoreBut = new GUIButton("SCORE: 0", scoreButRect, gray, gray);
     timeBut = new GUIButton("TIME:", timeButRect, gray, gray);
 
     scoreBut->SetFontSize(15.0f);
@@ -94,6 +92,9 @@ void GameScene::Init(Context* c) {
     gui->AddElement(scoreBut);
     gui->AddElement(timeBut);
   }
+
+  clock.Reset();
+
 }
 
 void GameScene::Step() {
@@ -114,12 +115,27 @@ void GameScene::Step() {
   score -= 100 * droppedBlocks;
   
   std::ostringstream buff;
+  buff.precision(1);
+  buff.setf(std::ios::fixed, std::ios::floatfield);
   buff << "SCORE: ";
   buff << (int)score;
-  std::string s(buff.str().c_str());
   
-  scoreBut->SetText(s);
+  scoreBut->SetText(buff.str());
+
+  float timeLeft = 120 - clock.GetElapsedTime();
+
+  if(timeLeft <= 0) {
+    context->gameState = State_Paused;
+    return;
+  }
+
+  buff.str("");
+  buff << "TIME: ";
+  buff << timeLeft;
   
+  timeBut->SetText(buff.str());
+
+
   world.Step();
 }
 
@@ -206,10 +222,6 @@ void GameScene::Render() {
     s = sf::Shape::Line(100, 700, 100, highestPoint, 3.0, sf::Color::Red);
     context->window->Draw(s);
   }
-
-
-  /*  s = platform.CreateRectangle();
-  context->window->Draw(s); */
 
   gui->Render();
 

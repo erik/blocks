@@ -8,6 +8,7 @@ enum GameState {
   State_InGame,
   State_InMenu,
   State_Paused,
+  State_GameOver,
   State_Closed
 } ;
 
