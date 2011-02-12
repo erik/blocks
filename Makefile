@@ -2,9 +2,8 @@ CC	:= g++
 IFLAGS 	:= -I include/ -IBox2D/Box2D
 CFLAGS	:= -Wall -Wextra -Wno-unused-parameter
 DFLAGS	:= -g -DDEBUG
-# $(shell find Box2D/Build/Box2D -name "*.o" -type f)
 
-BOX2D   := -lBox2D Box2D/Build/Box2D/libBox2D.a
+BOX2D   := -lBox2D Box2D/Box2D/Build/Box2D/libBox2D.a
 LNFLAGS	:= -lsfml-graphics -lsfml-window -lsfml-network -lsfml-system -lm $(BOX2D)
 EXE 	:= blocks
 
@@ -26,5 +25,13 @@ clean:
 
 debug:
 	@$(MAKE) $(MFLAGS) CFLAGS="$(CFLAGS) $(DFLAGS)"
+
+# fetches and builds box2d
+box2d:
+	wget http://box2d.googlecode.com/files/Box2D_v2.1.2.zip 
+	unzip Box2D_v2.1.2.zip 
+	mv Box2D_v2.1.2 Box2D
+	cd Box2D/Box2D/Build && cmake  -DBOX2D_INSTALL=ON -DBOX2D_BUILD_SHARED=ON .. && make && \
+rm ../../../Box2D_v2.1.2.zip 
 
 .PHONY= clean

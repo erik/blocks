@@ -1,6 +1,4 @@
-#include <iostream>
 #include "game.hpp"
-#include "world.hpp"
 
 int main() {  
  
