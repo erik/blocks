@@ -26,7 +26,7 @@ struct Context {
   Window *window;
   GameState gameState;
   InputHandler *input;
-  float frameRate;
+  double frameRate;
   GUIPage *gui;
   Scene* scene;
   Game* game;

@@ -12,7 +12,7 @@ namespace BackgroundConfig {
   const std::string backgroundImageName = "sky.tga";
   const std::string cloudImageName = "cloud.tga";
 
-  const int xDrift = 1;
+  const float xDrift = 1;
 }
 
 struct Context;

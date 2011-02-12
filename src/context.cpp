@@ -3,23 +3,9 @@
 #include "scene.hpp"
 
 void Context::HandleInput() {
-  const sf::Input& Input = window->App.GetInput();
+  const sf::Input& Input = input->HandleInput();
 
   scene->HandleInput(Input); 
-
-  sf::Event Event;
-  while (window->App.GetEvent(Event))
-    {
-
-      if (Event.Type == sf::Event::Closed || ((Event.Type == sf::Event::KeyPressed) && 
-                                              (Event.Key.Code == sf::Key::Escape))) {
-        gameState = State_Closed;
-        break;
-
-      } else {
-        scene->HandleEvent(Event);
-      }
-    }
 }
 
 void Context::Render() {

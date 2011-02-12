@@ -19,6 +19,7 @@ Game* Game::Create() {
   g->gui     = new GUIPage(g->win, g->context);
   g->context->scene   = new MenuScene();
   g->context->game    = g;
+  g->context->input   = new InputHandler(g->context);
 
   g->context->gui = g->gui;
 

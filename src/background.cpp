@@ -28,13 +28,13 @@ void Background::Step() {
   }
 
   for(int i = clouds.size() - 1; i >= 0 ; --i) {
-    int curX = clouds[i].GetPosition().x;
+    float curX = clouds[i].GetPosition().x;
     
     // erase clouds that have drifted off the screen
     if(curX >= 800 + 50) {
       clouds.erase(clouds.begin() + i);
     } else {
-      clouds[i].SetX(curX + BackgroundConfig::xDrift);
+      clouds[i].SetX(curX + 20 *  BackgroundConfig::xDrift * (1.0f / c->frameRate));
     }
     
   }

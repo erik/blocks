@@ -16,7 +16,7 @@ struct InputHandler {
 
   InputHandler(Context* c) : context(c), mouse(-1, -1), 
                              lastFrameTime(0.0f), clock() {}
-  void HandleInput();
+  const sf::Input&  HandleInput();
 };
 
 #endif /* _INPUT_H_ */
