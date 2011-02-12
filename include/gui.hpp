@@ -44,7 +44,7 @@ struct GUIElement {
   sf::Rect<int>::Rect shape;
   bool focused;
   sf::Color colFocused, colUnfocused;
-  sf::Font font;x
+  sf::Font font;
   float fontSize;
 
   OnClickCallback onClick;
