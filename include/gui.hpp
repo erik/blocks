@@ -86,7 +86,7 @@ public:
   GUIButton(std::string label, sf::Rect<int> s, sf::Color foc, sf::Color unFoc) : 
     label(label), textColor(sf::Color::Black) {
 
-    GUIElement::GUIElement();
+    GUIElement();
 
     shape = s;
 

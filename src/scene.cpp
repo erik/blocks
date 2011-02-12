@@ -118,7 +118,7 @@ void GameScene::Step() {
   buff.precision(1);
   buff.setf(std::ios::fixed, std::ios::floatfield);
   buff << "SCORE: ";
-  buff << (int)score;
+  buff << static_cast<int>(score);
   
   scoreBut->SetText(buff.str());
 
