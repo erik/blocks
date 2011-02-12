@@ -64,9 +64,9 @@ void Game::CreateMenu() {
   sf::Color invis(0, 0, 0, 0);
   sf::Color gray(0x22, 0x22, 0x22, 128);
   
-  sf::Rect<int>::Rect rect(200, 200, 600, 250);
-  sf::Rect<int>::Rect rect2(200, 275, 600, 325);
-  sf::Rect<int>::Rect rect3(200, 350, 600, 400); 
+  sf::Rect<int> rect(200, 200, 600, 250);
+  sf::Rect<int> rect2(200, 275, 600, 325);
+  sf::Rect<int> rect3(200, 350, 600, 400); 
 
   GUIButton *but =  new GUIButton("START GAME", rect, gray, invis);
   GUIButton *but2 = new GUIButton("OPTIONS",    rect2, gray, invis);
@@ -93,7 +93,7 @@ void Game::CreateGame() {
   
   sf::Color gray(0x44, 0x44, 0x44, 128);
 
-  sf::Rect<int>::Rect scoreRect(100, 100, 200, 150);
+  sf::Rect<int> scoreRect(100, 100, 200, 150);
 
   GUIButton *scoreBut = new GUIButton("SCORE: ", scoreRect, gray, gray);
 

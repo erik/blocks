@@ -80,8 +80,8 @@ void GameScene::Init(Context* c) {
   {
     sf::Color gray(0x22, 0x22, 0x22, 128);
     
-    sf::Rect<int>::Rect scoreButRect(50, 50, 170, 100);
-    sf::Rect<int>::Rect timeButRect(800 - 170, 50, 800 - 50, 100);
+    sf::Rect<int> scoreButRect(50, 50, 170, 100);
+    sf::Rect<int> timeButRect(800 - 170, 50, 800 - 50, 100);
     
     scoreBut = new GUIButton("SCORE: 0", scoreButRect, gray, gray);
     timeBut = new GUIButton("TIME:", timeButRect, gray, gray);

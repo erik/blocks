@@ -41,7 +41,7 @@ typedef void (*OnKeyCallback)(GUIElement* const, char key);
 
 struct GUIElement {
   GUIPage page;
-  sf::Rect<int>::Rect shape;
+  sf::Rect<int> shape;
   bool focused;
   sf::Color colFocused, colUnfocused;
   sf::Font font;
@@ -83,7 +83,7 @@ class GUIButton : public GUIElement {
   sf::Color textColor;
 
 public:
-  GUIButton(std::string label, sf::Rect<int>::Rect s, sf::Color foc, sf::Color unFoc) : 
+  GUIButton(std::string label, sf::Rect<int> s, sf::Color foc, sf::Color unFoc) : 
     label(label), textColor(sf::Color::Black) {
 
     GUIElement::GUIElement();

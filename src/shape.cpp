@@ -49,7 +49,7 @@ bool pointIntersectsShape(int x, int y, sf::Shape shape) {
   sf::Vector2<float> ltop = shape.GetPointPosition(0);
   sf::Vector2<float> rbot = shape.GetPointPosition(2);
 
-  sf::Rect<float>::Rect hitbox(ltop.x, ltop.y, rbot.x, rbot.y);
+  sf::Rect<float> hitbox(ltop.x, ltop.y, rbot.x, rbot.y);
 
   return hitbox.Contains(x, y);
 
