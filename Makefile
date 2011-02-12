@@ -3,7 +3,7 @@ IFLAGS 	:= -I include/ -IBox2D/Box2D
 CFLAGS	:= -Wall -Wextra -Wno-unused-parameter -std=c++98
 DFLAGS	:= -g -DDEBUG
 
-BOX2D   := -lBox2D Box2D/Box2D/Build/Box2D/libBox2D.a
+BOX2D   := Box2D/Box2D/Build/Box2D/libBox2D.a
 LNFLAGS	:= -lsfml-graphics -lsfml-window -lsfml-network -lsfml-system -lm $(BOX2D)
 EXE 	:= blocks
 
