@@ -141,3 +141,6 @@ void GUIButton::OnKey(char key) {
   std::cout << " (Button: \"" << label << "\")" << std::endl;
 }
  
+void GUIButton::SetText(std::string text) {
+  label = text;
+}

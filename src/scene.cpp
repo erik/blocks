@@ -74,21 +74,51 @@ void GameScene::Init(Context* c) {
   platform.SetColor(sf::Color(0x44, 0x44, 0x44, 255));
 
   x = 800.0 / 2;
+  
+  droppedBlocks = score = 0;
 
   GenerateShape();
+  gui = new GUIPage(context->window, context); 
+  {
+    sf::Color gray(0x22, 0x22, 0x22, 128);
+    
+    sf::Rect<int>::Rect scoreButRect(50, 50, 150, 100);
+    sf::Rect<int>::Rect timeButRect(800 - 150, 50, 800 - 50, 100);
+    
+    scoreBut = new GUIButton("0", scoreButRect, gray, gray);
+    timeBut = new GUIButton("TIME:", timeButRect, gray, gray);
+
+    scoreBut->SetFontSize(15.0f);
+    timeBut->SetFontSize(15.0f);
+
+    gui->AddElement(scoreBut);
+    gui->AddElement(timeBut);
+  }
 }
 
 void GameScene::Step() {
+  score = 0.0f;
   // remove blocks that are off screen
   std::vector<WorldShape>::iterator iter = blocks.begin();
   while(iter != blocks.end()) {
     if(iter->GetPosition().y >= 800) {
       iter->Destroy(world);
       iter = blocks.erase(iter);
+      droppedBlocks++;
     } else {
+      score += 700 - iter->GetPosition().y;
       ++iter;
     }
   }
+
+  score -= 100 * droppedBlocks;
+  
+  std::ostringstream buff;
+  buff << "SCORE: ";
+  buff << (int)score;
+  std::string s(buff.str().c_str());
+  
+  scoreBut->SetText(s);
   
   world.Step();
 }
@@ -180,6 +210,8 @@ void GameScene::Render() {
 
   /*  s = platform.CreateRectangle();
   context->window->Draw(s); */
+
+  gui->Render();
 
 }
 

@@ -3,8 +3,11 @@
 
 #include "world.hpp"
 #include "context.hpp"
+#include "gui.hpp"
 
 class Context;
+class GUIPage;
+class GUIButton;
 
 class Scene {
 protected:
@@ -41,6 +44,13 @@ class GameScene : public Scene {
 
   float x, w, h, rot;
   bool holdingShape;
+
+  GUIPage *gui;
+  GUIButton *scoreBut;
+  GUIButton *timeBut;
+
+  int droppedBlocks;
+  float score;
 
 public:
   void Init(Context *c);
