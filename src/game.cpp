@@ -21,7 +21,9 @@ Game* Game::Create() {
   g->context->game    = g;
 
   g->context->gui = g->gui;
-  
+
+  g->context->background = new Background(g->context);
+
   g->CreateMenu();
 
   return g;
@@ -29,6 +31,7 @@ Game* Game::Create() {
 
 void Game::Loop() {
   while(context->gameState != State_Closed) {   
+    context->Step();
     context->HandleInput();
     context->Render();
   }
@@ -59,7 +62,7 @@ void Game::CreateMenu() {
   // Create the GUI
 
   sf::Color invis(0, 0, 0, 0);
-  sf::Color gray(0x44, 0x44, 0x44, 128);
+  sf::Color gray(0x22, 0x22, 0x22, 128);
   
   sf::Rect<int>::Rect rect(200, 200, 600, 250);
   sf::Rect<int>::Rect rect2(200, 275, 600, 325);

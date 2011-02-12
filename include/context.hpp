@@ -8,6 +8,7 @@
 #include "world.hpp"
 #include "scene.hpp"
 #include "game.hpp"
+#include "background.hpp"
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
@@ -19,6 +20,7 @@ enum GameState;
 struct GUIPage;
 class Scene;
 class Game;
+class Background;
 
 struct Context {
   Window *window;
@@ -28,6 +30,7 @@ struct Context {
   GUIPage *gui;
   Scene* scene;
   Game* game;
+  Background* background;
 
   Context() : gameState(State_InMenu) {}
   Context(Window* w) : window(w), gameState(State_InMenu),
@@ -35,6 +38,7 @@ struct Context {
 
   void HandleInput();
   void Render();
+  void Step();
 
   // Initialize everything needed for the game
   static void Init();

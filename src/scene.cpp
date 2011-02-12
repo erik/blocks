@@ -1,7 +1,6 @@
 #include "scene.hpp"
+
 #include <SFML/Graphics.hpp>
-
-
 #include <sstream>
 
 void MenuScene::Init(Context *c) {
@@ -19,9 +18,9 @@ void MenuScene::Step() {
     int h = sf::Randomizer::Random(1, 50); 
     int x = sf::Randomizer::Random(1, 800);
 
-    int r = sf::Randomizer::Random(50, 256);
-    int g = sf::Randomizer::Random(50, 256);
-    int b = sf::Randomizer::Random(50, 256);
+    int r = sf::Randomizer::Random(1, 128);
+    int g = sf::Randomizer::Random(1, 128);
+    int b = sf::Randomizer::Random(1, 128);
 
     WorldShape ws = world.CreateBox(x, -50, w, h, false);
     ws.SetColor(sf::Color(r, g, b, 255));
@@ -52,8 +51,8 @@ void MenuScene::Render() {
     context->window->Draw(s);
   }
 
-  s = floor.CreateRectangle();
-  context->window->Draw(s);
+  /*  s = floor.CreateRectangle();
+  context->window->Draw(s); */
 }
 
 void MenuScene::HandleInput(const sf::Input& in) {
@@ -104,10 +103,10 @@ void GameScene::Render() {
 
 
   // Draw the alignment line
-  for(int i = 50 + h / 2, col = 0x66; i < 700; i += 10, col -= 4) {
+  for(int i = 50 + h / 2, col = 0x66; i < 700 / 1.25; i += 10, col += 6) {
     if (col <= 0) col = 0;
     s = sf::Shape::Line(x + w / 2, i, x + w / 2, i + 10, 1.0,
-                        sf::Color(col, col, col, 128));
+                        sf::Color(col, col, col, 256 - col));
     context->window->Draw(s);
     // To make a dashed line
     i += 10;
@@ -168,17 +167,19 @@ void GameScene::Render() {
 
   // Draw the bracket
   if(blocks.size() > 1 && highestIndex != -1) {
-    s = sf::Shape::Line(700.0 / 2 - 100, 700, 100, 700, 1.0, sf::Color::Red);
+    s = sf::Shape::Line(700.0 / 2 - 200, 700, 100, 700, 3.0, sf::Color::Red);
     context->window->Draw(s);
-    s = sf::Shape::Line(700.0 / 2 - 100, highestPoint, 100, highestPoint, 1.0, sf::Color::Red);
+
+    s = sf::Shape::Line(700.0 / 2 - 200, highestPoint, 100, highestPoint, 3.0, sf::Color::Red);
     context->window->Draw(s);
-    s = sf::Shape::Line(100, 700, 100, highestPoint, 1.0, sf::Color::Red);
+
+    s = sf::Shape::Line(100, 700, 100, highestPoint, 3.0, sf::Color::Red);
     context->window->Draw(s);
   }
 
 
-  s = platform.CreateRectangle();
-  context->window->Draw(s);
+  /*  s = platform.CreateRectangle();
+  context->window->Draw(s); */
 
 }
 

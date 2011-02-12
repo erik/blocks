@@ -64,7 +64,8 @@ void WorldShape::SetColor(sf::Color c) {
 
 // creates a proper rectangle which can be drawn to the screen
 sf::Shape WorldShape::CreateRectangle() {
-  sf::Shape s = sf::Shape::Rectangle(0, 0, w * WorldConfig::scale, h * WorldConfig::scale, color);
+  sf::Shape s = sf::Shape::Rectangle(0, 0, w * WorldConfig::scale, h * WorldConfig::scale,
+                                     color, 1.0f, sf::Color::Black);
   s.SetCenter(w * WorldConfig::scale / 2, h * WorldConfig::scale / 2);
   s.SetRotation(GetRotation());
   s.SetPosition(GetPosition());

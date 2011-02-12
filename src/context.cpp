@@ -24,6 +24,7 @@ void Context::HandleInput() {
 
 void Context::Render() {
   window->Clear();
+  background->Render();
 
   RenderState();
 
@@ -32,6 +33,7 @@ void Context::Render() {
 
 void Context::Init() {
   Window::Init();
+  Background::Init();
 }
 
 void Context::RenderState() {
@@ -52,4 +54,8 @@ void Context::RenderState() {
   default:
     std::cerr << "Todo: implement me. Context::RenderState()" << std::endl;
   }
+}
+
+void Context::Step() {
+  background->Step();
 }

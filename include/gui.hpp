@@ -37,6 +37,8 @@ struct GUIPage {
 typedef void (*OnClickCallback)(GUIElement* const, int, int);
 typedef void (*OnKeyCallback)(GUIElement* const, char key);
 
+// TODO: Allow setting outline color + width
+
 struct GUIElement {
   GUIPage page;
   sf::Rect<int>::Rect shape;

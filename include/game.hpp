@@ -14,7 +14,7 @@ struct Game {
   Context* context;
   Window* win;
   GUIPage* gui;
-  
+
   void Loop();
   void Close();
 
